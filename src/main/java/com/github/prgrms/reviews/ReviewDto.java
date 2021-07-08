@@ -1,4 +1,4 @@
-package com.github.prgrms.products;
+package com.github.prgrms.reviews;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -7,18 +7,28 @@ import java.time.LocalDateTime;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
 
-public class ProductDto {
+public class ReviewDto {
 
     private Long seq;
-    private String name;
-    private String details;
-    private int reviewCount;
+    private Long productId;
+    private String content;
     private LocalDateTime createAt;
 
-    public ProductDto(Product source) {
+    public ReviewDto(Long seq, Long productId, String content, LocalDateTime createAt) {
+        this.seq = seq;
+        this.productId = productId;
+        this.content = content;
+        this.createAt = createAt;
+    }
+
+    public ReviewDto(Review source) {
         copyProperties(source, this);
 
-        this.details = source.getDetails().orElse(null);
+        this.productId = source.getProductSeq();
+    }
+
+    public ReviewDto(Long seq){
+        this.seq = seq;
     }
 
     public Long getSeq() {
@@ -29,28 +39,20 @@ public class ProductDto {
         this.seq = seq;
     }
 
-    public String getName() {
-        return name;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public String getDetails() {
-        return details;
+    public String getContent() {
+        return content;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public int getReviewCount() {
-        return reviewCount;
-    }
-
-    public void setReviewCount(int reviewCount) {
-        this.reviewCount = reviewCount;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public LocalDateTime getCreateAt() {
@@ -61,16 +63,13 @@ public class ProductDto {
         this.createAt = createAt;
     }
 
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("seq", seq)
-                .append("name", name)
-                .append("details", details)
-                .append("reviewCount", reviewCount)
+                .append("productId", productId)
+                .append("content", content)
                 .append("createAt", createAt)
                 .toString();
     }
-
 }

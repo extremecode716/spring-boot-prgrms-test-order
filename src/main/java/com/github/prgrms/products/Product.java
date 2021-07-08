@@ -17,13 +17,9 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class Product {
 
     private final Long seq;
-
     private String name;
-
     private String details;
-
     private int reviewCount;
-
     private final LocalDateTime createAt;
 
     public Product(String name, String details) {
